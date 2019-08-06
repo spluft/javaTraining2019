@@ -11,7 +11,7 @@ public interface Deletor<P, T> {
      * Deleting item from given collection by its position.
      * */
     default P deleteItemFromCollection(Collection<P> collection, int position){
-        P element = (P) findElement(collection, position);
+        P element = findElement(collection, position);
 
         if(element == null){
             throw new IndexOutOfBoundsException("Element with index " +
@@ -27,8 +27,11 @@ public interface Deletor<P, T> {
      * Looking for and returning an element by position in the given
      * collection.
      * */
-    static Object findElement(Collection collection, int position){
-        Iterator it = collection.iterator();
+    // we can have generic in static methods,
+    // but static generic method needs to have a separate generic declaration,
+    // as it's not aware about the class one
+    static <K> K findElement(Collection<K> collection, int position){
+        Iterator<K> it = collection.iterator();
 
         for(int i = 0; i < position; i++){
             if(it.hasNext()) {
