@@ -31,9 +31,22 @@ public class PlayAnaliser {
                 ));
     }
 
-//    public static Map<String, Long> getListOfTagsByPopularity() {
-//
-//    }
+    public static Map<String, Long> getListOfTagsByPopularity(List<String> stringList) {
+        return stringList
+                .stream()
+                .collect(groupingBy(Function.identity(), counting()))
+                .entrySet()
+                .stream()
+                .sorted(Map.Entry.comparingByValue(Comparator.reverseOrder()))
+                .collect(Collectors.toMap(
+                        Map.Entry::getKey,
+                        Map.Entry::getValue,
+                        (v1, v2) -> {
+                            throw new IllegalStateException();
+                        },
+                        LinkedHashMap::new
+                ));
+    }
 
     private static List<String> getAllWordsBySpeaker(List<Speech> speechList, String speaker) {
         List<String> words = new ArrayList<>();

@@ -45,4 +45,24 @@ public class ParserTest {
                 .containsEntry("together", 4L)
                 .containsEntry("satyr", 1L);
     }
+
+    @Test
+    public void SaxParserGetPopularTagsTest() {
+        List<String> tags = ParserInstance.SAX.getListOfTags(this.path);
+        Map<String, Long> currentTagMap = PlayAnaliser.getListOfTagsByPopularity(tags);
+
+        assertThat(currentTagMap)
+                .containsEntry("LINE", 4014L)
+                .containsEntry("SCNDESCR", 1L);
+    }
+
+    @Test
+    public void DomParserGetPopularTagsTest() {
+        List<String> tags = ParserInstance.DOM.getListOfTags(this.path);
+        Map<String, Long> currentTagMap = PlayAnaliser.getListOfTagsByPopularity(tags);
+
+        assertThat(currentTagMap)
+                .containsEntry("LINE", 4014L)
+                .containsEntry("SCNDESCR", 1L);
+    }
 }

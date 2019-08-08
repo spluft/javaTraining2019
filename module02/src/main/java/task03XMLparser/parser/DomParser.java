@@ -5,6 +5,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
+import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 import task03XMLparser.model.EntityType;
@@ -22,6 +23,8 @@ public class DomParser implements Parser {
     private Logger logger = LogManager.getLogger(DomParser.class);
 
     private static DomParser instance;
+
+    private List<String> tagList = new ArrayList<>();
 
 
     public DomParser() {
@@ -84,8 +87,26 @@ public class DomParser implements Parser {
         return instance;
     }
 
+    private List<String> addToList(NodeList nodeList) {
+        for (int i = 0; i < nodeList.getLength(); i++) {
+            Node node = nodeList.item(i);
+            if (node.getNodeType() == Node.ELEMENT_NODE) {
+                tagList.add(node.getNodeName());
+                addToList(node.getChildNodes());
+            }
+        }
+        return tagList;
+    }
+
     @Override
     public List<Speech> parse(String path) {
         return startParse(path);
+    }
+
+    @Override
+    public List<String> getListOfTags(String path) {
+        Element play = getDocument(path);
+
+        return addToList(play.getChildNodes());
     }
 }

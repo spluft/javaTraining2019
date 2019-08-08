@@ -8,6 +8,7 @@ import task03XMLparser.model.Speech;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public class SaxHandler extends DefaultHandler {
 
@@ -17,6 +18,7 @@ public class SaxHandler extends DefaultHandler {
     private StringBuilder speechText;
 
     private List<Speech> speechList = new ArrayList<>();
+    private List<String> tagList = new ArrayList<>();
 
     @Override
     public void startDocument() throws SAXException {
@@ -27,17 +29,23 @@ public class SaxHandler extends DefaultHandler {
     public void startElement(String namespaceURI, String localName, String qName, Attributes atts) throws SAXException {
         entityType = EntityType.NULL;
         value = new StringBuilder();
-        switch (qName){
+        switch (qName) {
             case "SPEECH":
                 entityType = EntityType.SPEECH;
                 speech = new Speech();
                 speechText = new StringBuilder();
+                tagList.add(qName);
                 break;
             case "SPEAKER":
                 entityType = EntityType.SPEAKER;
+                tagList.add(qName);
                 break;
             case "LINE":
                 entityType = EntityType.LINE;
+                tagList.add(qName);
+                break;
+            default:
+                tagList.add(qName);
                 break;
         }
     }
@@ -49,22 +57,14 @@ public class SaxHandler extends DefaultHandler {
 
     @Override
     public void endElement(String uri, String localName, String qName) throws SAXException {
-//        if ("SPEAKER".equals(qName)) {
-//            speech.setSpeaker(value.toString());
-//        } else if ("LINE".equals(qName)) {
-//            speechText.append(value).append('\n');
-//        } else if ("SPEECH".equals(qName)) {
-//            speech.setLine(speechText.toString());
-//            speechList.add(speech);
-//        }
-        switch (qName) {
-            case "SPEAKER":
+        switch (entityType) {
+            case SPEAKER:
                 speech.setSpeaker(value.toString());
                 break;
-            case "LINE":
+            case LINE:
                 speechText.append(value).append('\n');
                 break;
-            case "SPEECH":
+            case SPEECH:
                 speech.setLine(speechText.toString());
                 speechList.add(speech);
                 break;
@@ -78,5 +78,9 @@ public class SaxHandler extends DefaultHandler {
 
     public List<Speech> getSpeechList() {
         return this.speechList;
+    }
+
+    public List<String> getTagList() {
+        return this.tagList;
     }
 }

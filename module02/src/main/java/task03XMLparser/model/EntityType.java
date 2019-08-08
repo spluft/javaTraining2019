@@ -4,5 +4,6 @@ public enum EntityType {
     SPEECH,
     SPEAKER,
     LINE,
+    PLAY,
     NULL
 }

@@ -49,4 +49,15 @@ public class SaxParser implements Parser {
     public List<Speech> parse(String path) {
         return startParse(path);
     }
+
+    @Override
+    public List<String> getListOfTags(String path) {
+        SaxHandler handler = new SaxHandler();
+        try {
+            this.saxParser.parse(new File(path), handler);
+        } catch (SAXException | IOException e) {
+            logger.log(Level.ERROR, e.getMessage());
+        }
+        return handler.getTagList();
+    }
 }
