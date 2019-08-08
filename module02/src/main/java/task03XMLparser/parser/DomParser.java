@@ -1,5 +1,8 @@
 package task03XMLparser.parser;
 
+import org.apache.logging.log4j.Level;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
@@ -15,10 +18,18 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class DomParser implements Parser{
+public class DomParser implements Parser {
+    private Logger logger = LogManager.getLogger(DomParser.class);
 
-    private List<Speech> parse(String path) throws ParserConfigurationException, SAXException, IOException {
-        Element play = getDocument(path);
+    private static DomParser instance;
+
+
+    public DomParser() {
+    }
+
+    private List<Speech> startParse(String path) {
+        Element play = null;
+        play = getDocument(path);
         List<Speech> speeches = new ArrayList<>();
         NodeList speechNodes = play.getElementsByTagName(String.valueOf(EntityType.SPEECH));
         for (int i = 0; i < speechNodes.getLength(); i++) {
@@ -29,10 +40,16 @@ public class DomParser implements Parser{
         return speeches;
     }
 
-    private Element getDocument(String path) throws IOException, SAXException, ParserConfigurationException {
+    private Element getDocument(String path) {
         DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
-        DocumentBuilder db = dbf.newDocumentBuilder();
-        Document document = db.parse(new File(path));
+        DocumentBuilder db = null;
+        Document document = null;
+        try {
+            db = dbf.newDocumentBuilder();
+            document = db.parse(new File(path));
+        } catch (ParserConfigurationException | IOException | SAXException e) {
+            logger.log(Level.ERROR, e.getMessage());
+        }
         return document.getDocumentElement();
     }
 
@@ -58,5 +75,17 @@ public class DomParser implements Parser{
             sb.append('\n');
         }
         return sb.toString();
+    }
+
+    public static Parser getInstance() {
+        if (instance == null) {
+            instance = new DomParser();
+        }
+        return instance;
+    }
+
+    @Override
+    public List<Speech> parse(String path) {
+        return startParse(path);
     }
 }

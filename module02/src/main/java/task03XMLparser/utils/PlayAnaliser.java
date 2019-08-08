@@ -1,5 +1,7 @@
 package task03XMLparser.utils;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import task03XMLparser.model.Speech;
 
 import java.util.*;
@@ -10,6 +12,7 @@ import static java.util.stream.Collectors.counting;
 import static java.util.stream.Collectors.groupingBy;
 
 public class PlayAnaliser {
+    private Logger logger = LogManager.getLogger(PlayAnaliser.class);
 
     public static Map<String, Long> getCountUniqueWordsBySpeaker(List<Speech> speechList, String speaker) {
         return getAllWordsBySpeaker(speechList, speaker)
@@ -28,9 +31,9 @@ public class PlayAnaliser {
                 ));
     }
 
-    public static Map<String, Long> getListOfTagsByPopularity() {
-
-    }
+//    public static Map<String, Long> getListOfTagsByPopularity() {
+//
+//    }
 
     private static List<String> getAllWordsBySpeaker(List<Speech> speechList, String speaker) {
         List<String> words = new ArrayList<>();
@@ -39,6 +42,7 @@ public class PlayAnaliser {
                 words.addAll(
                         Arrays.asList(
                                 speech.getLine()
+                                        .toLowerCase()
                                         .replaceAll("[^A-Za-z0-9_ ]", " ")
                                         .replace("  ", " ")
                                         .split("\\s")));

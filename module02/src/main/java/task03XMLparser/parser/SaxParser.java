@@ -1,7 +1,9 @@
 package task03XMLparser.parser;
 
+import org.apache.logging.log4j.Level;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.xml.sax.SAXException;
-import task03XMLparser.exception.XMLParserException;
 import task03XMLparser.model.Speech;
 
 import javax.xml.parsers.ParserConfigurationException;
@@ -11,40 +13,40 @@ import java.io.File;
 import java.io.IOException;
 import java.util.List;
 
-public class SaxParser implements Parser{
+public class SaxParser implements Parser {
+    private Logger logger = LogManager.getLogger(SaxParser.class);
+
     private static SaxParser instance;
 
-    private String path;
     private SAXParser saxParser;
 
-    private SaxParser(String path) {
-        this.path = path;
+    SaxParser() {
         try {
             this.saxParser = SAXParserFactory.newInstance().newSAXParser();
-        } catch (ParserConfigurationException e) {
-            e.printStackTrace();
-        } catch (SAXException e) {
-            e.printStackTrace();
+        } catch (ParserConfigurationException | SAXException e) {
+            logger.log(Level.ERROR, e.getMessage());
         }
     }
 
-    private List<Speech> startParse() throws XMLParserException {
-        SAXParserFactory factory = SAXParserFactory.newInstance();
+    private List<Speech> startParse(String path) {
         SaxHandler handler = new SaxHandler();
-        this.saxParser.parse(new File(this.path), handler);
+        try {
+            this.saxParser.parse(new File(path), handler);
+        } catch (SAXException | IOException e) {
+            logger.log(Level.ERROR, e.getMessage());
+        }
         return handler.getSpeechList();
     }
 
-    @Override
-    public Parser getInstance(String path) {
+    public static Parser getInstance() {
         if (instance == null) {
-            instance = new SaxParser(path);
+            instance = new SaxParser();
         }
         return instance;
     }
 
     @Override
-    public List<Speech> parse(String path) throws XMLParserException {
-        return startParse();
+    public List<Speech> parse(String path) {
+        return startParse(path);
     }
 }
