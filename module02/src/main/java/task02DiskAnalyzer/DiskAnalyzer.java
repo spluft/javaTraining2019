@@ -5,6 +5,8 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.Comparator;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -38,9 +40,14 @@ public class DiskAnalyzer {
                         File::getAbsoluteFile,
                         file -> Stream.of(file.length())
                                 .reduce(Long.MIN_VALUE, Long::max)))
-                .entrySet().stream().sorted(Map.Entry.<File, Long>comparingByValue().reversed())
+                .entrySet()
+                .stream()
+                .sorted(Map.Entry.comparingByValue(Comparator.reverseOrder()))
                 .limit(5)
-                .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
+                .collect(Collectors.toMap(
+                        Map.Entry::getKey,
+                        Map.Entry::getValue,
+                        (oldValue, newValue) -> oldValue, LinkedHashMap::new));
     }
 
     public double getAverageSizeOfFiles(Boolean isWithSubdirs) throws IOException {
@@ -73,8 +80,13 @@ public class DiskAnalyzer {
                 .stream()
                 .flatMap(s -> Stream.of(s.getName()))
                 .map(String::toLowerCase)
-                .sorted(String::compareTo)
-                .collect(Collectors.groupingBy(s -> s.toString().charAt(0), Collectors.counting()));
+                .collect(Collectors.groupingBy(s -> s.toString().charAt(0), Collectors.counting()))
+                .entrySet().stream()
+                .sorted(Map.Entry.comparingByValue(Comparator.reverseOrder()))
+                .collect(Collectors.toMap(
+                        Map.Entry::getKey,
+                        Map.Entry::getValue,
+                        (oldValue, newValue) -> oldValue, LinkedHashMap::new));
     }
 
     private List<File> recursivelyFindPaths(String path) throws IOException {

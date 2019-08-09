@@ -1,7 +1,5 @@
 package task01;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -12,13 +10,12 @@ import java.util.List;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class SerializationTest {
-    private Logger logger = LogManager.getLogger();
 
     String pathToPersonOne;
     String pathToPersonTwo;
 
     @BeforeEach
-    public void init(){
+    public void init() {
         this.pathToPersonOne = "personOne.out";
         this.pathToPersonTwo = "personTwo.out";
     }
