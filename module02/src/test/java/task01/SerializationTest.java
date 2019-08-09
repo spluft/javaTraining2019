@@ -2,7 +2,7 @@ package task01;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.assertj.core.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.io.*;
@@ -11,27 +11,51 @@ import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class SerializationClass {
+public class SerializationTest {
     private Logger logger = LogManager.getLogger();
 
-    @Test
-    public void testCollector() throws IOException, ClassNotFoundException {
+    String pathToPersonOne;
+    String pathToPersonTwo;
 
+    @BeforeEach
+    public void init(){
+        this.pathToPersonOne = "personOne.out";
+        this.pathToPersonTwo = "personTwo.out";
+    }
+
+    @Test
+    public void serialiationTest() throws IOException, ClassNotFoundException {
         List<Person> personList = getPeople();
 
-        writePerson(personList.get(0),"personOne.out");
-        writePerson(personList.get(1),"personTwo.out");
+        writePerson(personList.get(0), pathToPersonOne);
+        writePerson(personList.get(1), pathToPersonTwo);
+
+        assertThat(new File(pathToPersonOne))
+                .exists();
+
+        assertThat(new File(pathToPersonTwo))
+                .exists();
+    }
+
+    @Test
+    public void deserialiationTest() throws IOException, ClassNotFoundException {
+        List<Person> personList = getPeople();
+
+        writePerson(personList.get(0), "personOne.out");
+        writePerson(personList.get(1), "personTwo.out");
 
         Person personOne = readPerson("personOne.out");
         Person personTwo = readPerson("personTwo.out");
 
         assertThat(personOne)
                 .isNotNull()
-                .isLenientEqualsToByAcceptingFields(personList.get(0), "name");
+                .isLenientEqualsToByAcceptingFields(personList.get(0), "name")
+                .isNotEqualTo(personList.get(0));
 
         assertThat(personTwo)
                 .isNotNull()
-                .isLenientEqualsToByAcceptingFields(personList.get(1),"name");
+                .isLenientEqualsToByAcceptingFields(personList.get(1), "name")
+                .isNotEqualTo(personList.get(1));
     }
 
     private Person readPerson(String fileName) throws IOException, ClassNotFoundException {
@@ -40,6 +64,7 @@ public class SerializationClass {
 
         return (Person) ois.readObject();
     }
+
     private void writePerson(Person person, String fileName) throws IOException {
         FileOutputStream fos = new FileOutputStream(fileName);
         ObjectOutputStream oos = new ObjectOutputStream(fos);
