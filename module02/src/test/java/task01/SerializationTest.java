@@ -1,6 +1,7 @@
 package task01;
 
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.io.*;
@@ -21,7 +22,8 @@ public class SerializationTest {
     }
 
     @Test
-    public void serialiationTest() throws IOException, ClassNotFoundException {
+    @DisplayName("Serialization test")
+    public void serializationTest() throws IOException, ClassNotFoundException {
         List<Person> personList = getPeople();
 
         writePerson(personList.get(0), pathToPersonOne);
@@ -35,7 +37,8 @@ public class SerializationTest {
     }
 
     @Test
-    public void deserialiationTest() throws IOException, ClassNotFoundException {
+    @DisplayName("DeSerialization test")
+    public void deserializationTest() throws IOException, ClassNotFoundException {
         List<Person> personList = getPeople();
 
         writePerson(personList.get(0), "personOne.out");

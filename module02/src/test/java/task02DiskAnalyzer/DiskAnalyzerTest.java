@@ -3,6 +3,7 @@ package task02DiskAnalyzer;
 import org.assertj.core.util.Files;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import task04FileMover.utils.FileGenerator;
 
@@ -50,6 +51,7 @@ public class DiskAnalyzerTest {
     }
 
     @Test
+    @DisplayName("Point 01")
     public void testFindFileWithMaxNumberOfChar() throws IOException {
         DiskAnalyzer diskAnalyzer = new DiskAnalyzer(BASE_CATALOG);
 
@@ -62,6 +64,7 @@ public class DiskAnalyzerTest {
     }
 
     @Test
+    @DisplayName("Point 02")
     public void testFind5TopBigSize() throws IOException {
         DiskAnalyzer diskAnalyzer = new DiskAnalyzer(BASE_CATALOG);
 
@@ -77,6 +80,7 @@ public class DiskAnalyzerTest {
     }
 
     @Test
+    @DisplayName("Point 03")
     public void testGetAverageSizeOfFilesWithSubdirectories() throws IOException {
         DiskAnalyzer diskAnalyzer = new DiskAnalyzer(BASE_CATALOG);
 
@@ -85,6 +89,7 @@ public class DiskAnalyzerTest {
     }
 
     @Test
+    @DisplayName("Point 04")
     public void testGetAverageSizeOfFilesWithoutSubdirectories() throws IOException {
         DiskAnalyzer diskAnalyzer = new DiskAnalyzer(BASE_CATALOG);
 
@@ -93,6 +98,7 @@ public class DiskAnalyzerTest {
     }
 
     @Test
+    @DisplayName("Point 05")
     public void testGetSortedStatistics() throws IOException {
         DiskAnalyzer diskAnalyzer = new DiskAnalyzer(BASE_CATALOG);
 

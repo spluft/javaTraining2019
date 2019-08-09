@@ -2,6 +2,7 @@ package task04FileMover;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import task04FileMover.movers.FileChannelMover;
 import task04FileMover.movers.FileStreamMover;
@@ -32,6 +33,7 @@ public class FileMoverTest {
     }
 
     @Test
+    @DisplayName("Point 01")
     public void FileStreamMoverTest() throws IOException {
         FileStreamMover mover = new FileStreamMover();
         mover.move(in, out);
@@ -41,6 +43,7 @@ public class FileMoverTest {
     }
 
     @Test
+    @DisplayName("Point 02")
     public void FileStreamWithBufferMoverTest() throws IOException {
         FileStreamWithBufferMover mover = new FileStreamWithBufferMover();
         mover.move(in, out);
@@ -50,6 +53,7 @@ public class FileMoverTest {
     }
 
     @Test
+    @DisplayName("Point 03")
     public void FileChannelMoverTest() throws IOException {
         FileChannelMover mover = new FileChannelMover();
         mover.move(in, out);
@@ -59,6 +63,7 @@ public class FileMoverTest {
     }
 
     @Test
+    @DisplayName("Point 04")
     public void Nio2MoverTest() throws IOException {
         Nio2Mover mover = new Nio2Mover();
         mover.move(in, out);
