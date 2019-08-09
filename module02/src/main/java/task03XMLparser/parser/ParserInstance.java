@@ -1,6 +1,8 @@
 package task03XMLparser.parser;
 
 import task03XMLparser.model.Speech;
+import task03XMLparser.parser.dom.DomParser;
+import task03XMLparser.parser.sax.SaxParser;
 
 import java.util.List;
 

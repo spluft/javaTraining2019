@@ -1,4 +1,4 @@
-package task03XMLparser.parser;
+package task03XMLparser.parser.sax;
 
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;

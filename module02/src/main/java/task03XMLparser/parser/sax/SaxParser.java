@@ -1,10 +1,11 @@
-package task03XMLparser.parser;
+package task03XMLparser.parser.sax;
 
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.xml.sax.SAXException;
 import task03XMLparser.model.Speech;
+import task03XMLparser.parser.Parser;
 
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.parsers.SAXParser;

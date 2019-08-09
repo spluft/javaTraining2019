@@ -1,4 +1,4 @@
-package task03XMLparser.parser;
+package task03XMLparser.parser.dom;
 
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
@@ -10,6 +10,7 @@ import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 import task03XMLparser.model.EntityType;
 import task03XMLparser.model.Speech;
+import task03XMLparser.parser.Parser;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
