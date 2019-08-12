@@ -5,18 +5,21 @@ import java.util.Comparator;
 import java.util.List;
 
 public class App {
+    private static Comparator<Person> compareByNameAsc;
+    private static Comparator<Person> compareByAgeDesc;
 
-    public static void main(String[] args) {
-        List<Person> people = getPeople();
-
+    static {
         Comparator<Person> compareByNameAsc =
                 (p1, p2) -> p1.getName().compareTo(p2.getName());
         Comparator<Person> compareByAgeDesc =
                 (p1, p2) -> p2.getAge() - p1.getAge();
+    }
+
+    public static void main(String[] args) {
+        List<Person> people = getPeople();
 
         sortingListOfPersonByNameAsc(people, compareByNameAsc);
         sortingListOfPersonByAgeDesc(people, compareByAgeDesc);
-
     }
 
     private static void sortingListOfPersonByNameAsc(List<Person> people, Comparator<Person> compareByNameAsc) {
