@@ -11,28 +11,52 @@ public class App {
     private static List<Person> people = new ArrayList<>();
     private static Consumer<String> printingOperation = System.out::println;
 
+    private static UnaryOperator<String> addBasisToNameOperation;
+    private static Runnable initializePeopleOperation;
+    private static Supplier<String> getPeopleInfoOperation;
+    private static BiFunction<String, String, Person> createPersonWithStringAgeOperation;
+    private static BiFunction<String, Integer, Person> createPersonOperation;
+    private static Consumer<Person> addPersonToPeopleOperation;
+    private static Deletor<Person, Integer> lambdaDeletor;
+    private static Deletor<Person, Integer> anonimousDeletor;
+
     public static void main(String[] args) {
-        UnaryOperator<String> addBasisToNameOperation = (n) -> n + ", Mr/Mrs";
-        BiFunction<String, Integer, Person> createPersonOperation = (name, age)
+        initApp();
+
+        myOwnFunctionalInterfaceWIthLambda();
+
+        myOwnFunctionalInterfaceWithAnonimousClass();
+
+        lambdaDeletor = myOwnFunctionalInterfaceWIthLambda();
+        anonimousDeletor = myOwnFunctionalInterfaceWithAnonimousClass();
+
+        printResults();
+    }
+
+    private static void initApp() {
+        addBasisToNameOperation = (n) -> n + ", Mr/Mrs";
+        createPersonOperation = (name, age)
                 -> new Person(addBasisToNameOperation.apply(name), age);
-        Consumer<Person> addPersonToPeopleOperation = (person) -> people.add
+        addPersonToPeopleOperation = (person) -> people.add
                 (person);
         Function<String, Integer> stringToIntegerConverter = Integer::parseInt;
-        BiFunction<String, String, Person> createPersonWithStringAgeOperation =
+        createPersonWithStringAgeOperation =
                 (name, age) -> new Person(addBasisToNameOperation.apply(name),
                         stringToIntegerConverter.apply(age));
-        Supplier<String> getPeopleInfoOperation = () -> people.stream().map(p -> p
+        getPeopleInfoOperation = () -> people.stream().map(p -> p
                 .toString()).reduce("", (s1, s2) -> s1 + "\n" + s2);
-        Runnable initializePeopleOperation = () -> {
+        initializePeopleOperation = () -> {
             addPersonToPeopleOperation.accept(createPersonOperation.apply("Saveliy", 25));
             addPersonToPeopleOperation.accept(createPersonOperation.apply("Olga", 23));
             addPersonToPeopleOperation.accept(createPersonOperation.apply("Oleg", 45));
             addPersonToPeopleOperation.accept(createPersonOperation.apply("Alex", 32));
         };
+    }
 
-        /*
-         * Defining Deletor with lambda. Also using static interface method.
-         * */
+    /*
+     * Defining Deletor with lambda. Also using static interface method.
+     * */
+    private static Deletor<Person, Integer> myOwnFunctionalInterfaceWIthLambda(){
         Deletor<Person, Integer> lambdaDeletor = (i) -> {
             Person pers = (Person) Deletor.findElement(people, people.size() - 1);
             people.remove(pers);
@@ -40,9 +64,13 @@ public class App {
             return pers;
         };
 
-        /*
-         * Defining Deletor with anonimous class.
-         * */
+        return lambdaDeletor;
+    }
+
+    /*
+     * Defining Deletor with anonimous class.
+     * */
+    private static Deletor<Person, Integer> myOwnFunctionalInterfaceWithAnonimousClass(){
         Deletor<Person, Integer> anonimousDeletor = new Deletor<Person, Integer>() {
             @Override
             public Person delete(Integer pointer) {
@@ -63,6 +91,10 @@ public class App {
             }
         };
 
+        return anonimousDeletor;
+    }
+
+    private static void printResults(){
         printingOperation.accept("\n1. Generating a list of people:");
         initializePeopleOperation.run();
         printingOperation.accept(getPeopleInfoOperation.get());

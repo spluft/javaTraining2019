@@ -15,7 +15,7 @@ public class App {
                 (p1, p2) -> p2.getAge() - p1.getAge();
 
         sortingListOfPersonByNameAsc(people, compareByNameAsc);
-        sortingListOfPersonByAgeDesc(people,compareByAgeDesc);
+        sortingListOfPersonByAgeDesc(people, compareByAgeDesc);
 
     }
 
@@ -25,7 +25,7 @@ public class App {
                 .forEach(System.out::println);
     }
 
-    private static void sortingListOfPersonByAgeDesc(List<Person> people, Comparator<Person> compareByAgeDesc){
+    private static void sortingListOfPersonByAgeDesc(List<Person> people, Comparator<Person> compareByAgeDesc) {
         System.out.println("\nSorting list of people by age in " +
                 "descendant order:");
         people.stream().sorted(compareByAgeDesc)
