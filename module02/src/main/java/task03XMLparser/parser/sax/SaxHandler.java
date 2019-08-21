@@ -57,14 +57,14 @@ public class SaxHandler extends DefaultHandler {
 
     @Override
     public void endElement(String uri, String localName, String qName) throws SAXException {
-        switch (entityType) {
-            case SPEAKER:
+        switch (qName) {
+            case "SPEAKER":
                 speech.setSpeaker(value.toString());
                 break;
-            case LINE:
+            case "LINE":
                 speechText.append(value).append('\n');
                 break;
-            case SPEECH:
+            case "SPEECH":
                 speech.setLine(speechText.toString());
                 speechList.add(speech);
                 break;
