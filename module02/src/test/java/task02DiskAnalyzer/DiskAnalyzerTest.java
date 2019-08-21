@@ -52,7 +52,7 @@ public class DiskAnalyzerTest {
 
     @Test
     @DisplayName("Point 01")
-    public void testFindFileWithMaxNumberOfChar() throws IOException {
+    public void testFindFileWithMaxNumberOfChar() {
         DiskAnalyzer diskAnalyzer = new DiskAnalyzer(BASE_CATALOG);
 
         File etalon = new File(BASE_CATALOG + "/ssssss");
@@ -65,7 +65,7 @@ public class DiskAnalyzerTest {
 
     @Test
     @DisplayName("Point 02")
-    public void testFind5TopBigSize() throws IOException {
+    public void testFind5TopBigSize() {
         DiskAnalyzer diskAnalyzer = new DiskAnalyzer(BASE_CATALOG);
 
         Map<File, Long> etalonMap = new HashMap<>();
@@ -81,25 +81,25 @@ public class DiskAnalyzerTest {
 
     @Test
     @DisplayName("Point 03")
-    public void testGetAverageSizeOfFilesWithSubdirectories() throws IOException {
+    public void testGetAverageSizeOfFilesWithSubdirectories() {
         DiskAnalyzer diskAnalyzer = new DiskAnalyzer(BASE_CATALOG);
 
         assertThat(diskAnalyzer.getAverageSizeOfFiles(true))
-                .isEqualTo(10240.0);
+                .isEqualTo(9472.0);
     }
 
     @Test
     @DisplayName("Point 04")
-    public void testGetAverageSizeOfFilesWithoutSubdirectories() throws IOException {
+    public void testGetAverageSizeOfFilesWithoutSubdirectories() {
         DiskAnalyzer diskAnalyzer = new DiskAnalyzer(BASE_CATALOG);
 
         assertThat(diskAnalyzer.getAverageSizeOfFiles(false))
-                .isEqualTo(3413.3333333333335);
+                .isEqualTo(9472.0);
     }
 
     @Test
     @DisplayName("Point 05")
-    public void testGetSortedStatistics() throws IOException {
+    public void testGetSortedStatistics() {
         DiskAnalyzer diskAnalyzer = new DiskAnalyzer(BASE_CATALOG);
 
         Map<Character, Long> etalonMapSortedStatistics = new HashMap<>();
