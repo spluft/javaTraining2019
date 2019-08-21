@@ -1,5 +1,7 @@
 package task03XMLparser.parser.sax;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
@@ -10,6 +12,8 @@ import java.util.List;
 
 public class SaxHandler extends DefaultHandler {
 
+    private static final Logger LOG = LogManager.getLogger(SaxHandler.class);
+
     private Speech speech;
     private StringBuilder value;
     private StringBuilder speechText;
@@ -19,7 +23,7 @@ public class SaxHandler extends DefaultHandler {
 
     @Override
     public void startDocument() throws SAXException {
-        System.out.println("Start parse XML...");
+        LOG.info("Start parse XML...");
     }
 
     @Override
@@ -61,7 +65,7 @@ public class SaxHandler extends DefaultHandler {
 
     @Override
     public void endDocument() throws SAXException {
-        System.out.println("End parse XML.");
+        LOG.info("End parse XML.");
     }
 
     public List<Speech> getSpeechList() {

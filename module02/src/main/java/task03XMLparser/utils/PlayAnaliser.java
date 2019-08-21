@@ -12,7 +12,6 @@ import static java.util.stream.Collectors.counting;
 import static java.util.stream.Collectors.groupingBy;
 
 public class PlayAnaliser {
-    private Logger logger = LogManager.getLogger(PlayAnaliser.class);
 
     public static Map<String, Long> getCountUniqueWordsBySpeaker(List<Speech> speechList, String speaker) {
         return getAllWordsBySpeaker(speechList, speaker)

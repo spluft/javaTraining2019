@@ -23,7 +23,7 @@ import java.util.Collections;
 import java.util.List;
 
 public class DomParser implements Parser {
-    private Logger logger = LogManager.getLogger(DomParser.class);
+    private static final Logger LOG = LogManager.getLogger(DomParser.class);
 
     private static DomParser instance;
 
@@ -55,7 +55,7 @@ public class DomParser implements Parser {
             db = dbf.newDocumentBuilder();
             document = db.parse(new File(path));
         } catch (ParserConfigurationException | IOException | SAXException e) {
-            logger.log(Level.ERROR, e.getMessage());
+            LOG.log(Level.ERROR, e.getMessage());
         }
         return document.getDocumentElement();
     }

@@ -15,7 +15,7 @@ import java.io.IOException;
 import java.util.List;
 
 public class SaxParser implements Parser {
-    private Logger logger = LogManager.getLogger(SaxParser.class);
+    private static final Logger LOG = LogManager.getLogger(SaxParser.class);
 
     private static SaxParser instance;
 
@@ -25,7 +25,7 @@ public class SaxParser implements Parser {
         try {
             this.saxParser = SAXParserFactory.newInstance().newSAXParser();
         } catch (ParserConfigurationException | SAXException e) {
-            logger.log(Level.ERROR, e.getMessage());
+            LOG.log(Level.ERROR, e.getMessage());
         }
     }
 
@@ -34,7 +34,7 @@ public class SaxParser implements Parser {
         try {
             this.saxParser.parse(new File(path), handler);
         } catch (SAXException | IOException e) {
-            logger.log(Level.ERROR, e.getMessage());
+            LOG.log(Level.ERROR, e.getMessage());
         }
         return handler.getSpeechList();
     }
@@ -57,7 +57,7 @@ public class SaxParser implements Parser {
         try {
             this.saxParser.parse(new File(path), handler);
         } catch (SAXException | IOException e) {
-            logger.log(Level.ERROR, e.getMessage());
+            LOG.log(Level.ERROR, e.getMessage());
         }
         return handler.getTagList();
     }
