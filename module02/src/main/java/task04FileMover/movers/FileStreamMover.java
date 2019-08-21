@@ -7,24 +7,26 @@ import org.apache.logging.log4j.Logger;
 import java.io.*;
 
 public class FileStreamMover implements Mover {
-    private Logger logger = LogManager.getLogger(FileStreamMover.class);
+    private static final Logger LOG = LogManager.getLogger(FileStreamMover.class);
 
     @Override
-    public double move(String in, String out) throws IOException {
+    public double move(String in, String out) {
         long startTime = System.nanoTime();
         File sourceFile = new File(in);
-        if (sourceFile.exists()) {
-            InputStream is = new FileInputStream(sourceFile);
-            OutputStream os = new FileOutputStream(out);
+        try (InputStream is = new FileInputStream(sourceFile);
+             OutputStream os = new FileOutputStream(out)) {
 
             int readByte;
             while ((readByte = is.read()) != -1) {
                 os.write(readByte);
             }
             sourceFile.delete();
-        } else {
-            logger.info(SOURCE_NOT_EXIST + in);
+        } catch (FileNotFoundException e) {
+            LOG.error("Exception during move by FileStreamMover: ", e);
+        } catch (IOException e) {
+            LOG.error("Exception during move by FileStreamMover: ", e);
         }
+
         long endTime = System.nanoTime();
         return (double) (endTime - startTime);
     }

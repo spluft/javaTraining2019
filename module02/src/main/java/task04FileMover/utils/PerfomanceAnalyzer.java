@@ -9,10 +9,9 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 
 public class PerfomanceAnalyzer {
-    private Logger logger = LogManager.getLogger(PerfomanceAnalyzer.class);
+    private static final Logger LOG = LogManager.getLogger(PerfomanceAnalyzer.class);
 
     public static final int[] FILE_SIZES = new int[]{1};
-//    public static final int[] FILE_SIZES = new int[]{1, 100, 10240, 1048576};
     final private int CONST_REPEAT = 1000;
 
     private String in;
@@ -24,8 +23,8 @@ public class PerfomanceAnalyzer {
         this.out = out;
     }
 
-    public void reportPerfomance(Mover mover) throws IOException {
-        logger.info(mover.getClass().getSimpleName());
+    public void reportPerfomance(Mover mover) {
+        LOG.info(mover.getClass().getSimpleName());
         try {
             for (int size : FILE_SIZES) {
                 for (int j = 0; j < CONST_REPEAT; j++) {
@@ -37,7 +36,7 @@ public class PerfomanceAnalyzer {
                 restartTimer();
             }
         } catch (IOException e) {
-            logger.error("", e);
+            LOG.error("", e);
         } finally {
             deleteFile();
         }
@@ -46,12 +45,12 @@ public class PerfomanceAnalyzer {
     private void logTime(double time, int size) {
         if (averageTime > 1_000_000_000) {
             double recalculated = time / 1_000_000_000;
-            logger.info(recalculated + " seconds. File size " + size + " KB.");
+            LOG.info(recalculated + " seconds. File size " + size + " KB.");
         } else if (averageTime > 1_000_000) {
             double recalculated = time / 1_000_000;
-            logger.info(recalculated + " milliseconds. File size " + size + " KB.");
+            LOG.info(recalculated + " milliseconds. File size " + size + " KB.");
         } else
-            logger.info(time + " nanoseconds. File size " + size + " KB.");
+            LOG.info(time + " nanoseconds. File size " + size + " KB.");
 
     }
 
@@ -59,9 +58,13 @@ public class PerfomanceAnalyzer {
         averageTime = 0;
     }
 
-    private void deleteFile() throws IOException {
-        Files.deleteIfExists(Paths.get(in));
-        Files.deleteIfExists(Paths.get(out));
+    private void deleteFile() {
+        try {
+            Files.deleteIfExists(Paths.get(in));
+            Files.deleteIfExists(Paths.get(out));
+        } catch (IOException e) {
+            LOG.error("Exception in PerfomanceAnalyzer.deleteFile: ", e);
+        }
     }
 
 }

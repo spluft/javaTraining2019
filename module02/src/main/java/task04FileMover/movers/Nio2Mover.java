@@ -9,17 +9,18 @@ import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
 
 public class Nio2Mover implements Mover {
-    private Logger logger = LogManager.getLogger(Nio2Mover.class);
+    private static final Logger LOG = LogManager.getLogger(Nio2Mover.class);
 
     @Override
-    public double move(String in, String out) throws IOException {
+    public double move(String in, String out) {
         long startTime = System.nanoTime();
         File sourceFile = new File(in);
-        if (sourceFile.exists()) {
+        try {
             Files.move(sourceFile.toPath(), new File(out).toPath(), StandardCopyOption.REPLACE_EXISTING);
-        } else {
-            logger.info(SOURCE_NOT_EXIST + in);
+        } catch (IOException e) {
+            LOG.error("Exception during move by Nio2Mover: ", e);
         }
+
         long endTime = System.nanoTime();
         return (double) (endTime - startTime);
     }

@@ -22,7 +22,7 @@ public class FileMoverTest {
     private String out = "ttout";
 
     @BeforeEach
-    public void beforeMethod() throws IOException {
+    public void beforeMethod() {
         FileGenerator.generate(in, 1);
     }
 
@@ -34,7 +34,7 @@ public class FileMoverTest {
 
     @Test
     @DisplayName("Point 01")
-    public void FileStreamMoverTest() throws IOException {
+    public void FileStreamMoverTest() {
         FileStreamMover mover = new FileStreamMover();
         mover.move(in, out);
 
@@ -44,7 +44,7 @@ public class FileMoverTest {
 
     @Test
     @DisplayName("Point 02")
-    public void FileStreamWithBufferMoverTest() throws IOException {
+    public void FileStreamWithBufferMoverTest() {
         FileStreamWithBufferMover mover = new FileStreamWithBufferMover();
         mover.move(in, out);
 
@@ -54,7 +54,7 @@ public class FileMoverTest {
 
     @Test
     @DisplayName("Point 03")
-    public void FileChannelMoverTest() throws IOException {
+    public void FileChannelMoverTest() {
         FileChannelMover mover = new FileChannelMover();
         mover.move(in, out);
 
@@ -64,7 +64,7 @@ public class FileMoverTest {
 
     @Test
     @DisplayName("Point 04")
-    public void Nio2MoverTest() throws IOException {
+    public void Nio2MoverTest() {
         Nio2Mover mover = new Nio2Mover();
         mover.move(in, out);
 
