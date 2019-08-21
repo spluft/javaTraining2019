@@ -3,16 +3,13 @@ package task03XMLparser.parser.sax;
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
-import task03XMLparser.model.EntityType;
 import task03XMLparser.model.Speech;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 public class SaxHandler extends DefaultHandler {
 
-    private EntityType entityType;
     private Speech speech;
     private StringBuilder value;
     private StringBuilder speechText;
@@ -27,21 +24,12 @@ public class SaxHandler extends DefaultHandler {
 
     @Override
     public void startElement(String namespaceURI, String localName, String qName, Attributes atts) throws SAXException {
-        entityType = EntityType.NULL;
+        //value should be reset every new opening tag
         value = new StringBuilder();
         switch (qName) {
             case "SPEECH":
-                entityType = EntityType.SPEECH;
                 speech = new Speech();
                 speechText = new StringBuilder();
-                tagList.add(qName);
-                break;
-            case "SPEAKER":
-                entityType = EntityType.SPEAKER;
-                tagList.add(qName);
-                break;
-            case "LINE":
-                entityType = EntityType.LINE;
                 tagList.add(qName);
                 break;
             default:
