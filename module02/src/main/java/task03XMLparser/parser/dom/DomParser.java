@@ -18,6 +18,8 @@ import javax.xml.parsers.ParserConfigurationException;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 public class DomParser implements Parser {
@@ -32,6 +34,7 @@ public class DomParser implements Parser {
     }
 
     private List<Speech> startParse(String path) {
+        tagList = new ArrayList<>();
         Element play = null;
         play = getDocument(path);
         List<Speech> speeches = new ArrayList<>();
