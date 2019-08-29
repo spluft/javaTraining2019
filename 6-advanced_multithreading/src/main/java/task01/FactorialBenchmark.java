@@ -14,7 +14,7 @@ import java.util.concurrent.TimeUnit;
 @OutputTimeUnit(TimeUnit.MILLISECONDS)
 @State(Scope.Benchmark)
 @Fork(value = 1, jvmArgs = {"-Xms1G", "-Xmx15G"})
-@Warmup(iterations = 2)
+@Warmup(iterations = 1)
 @Measurement(iterations = 3)
 public class FactorialBenchmark {
     @Param({"1"})
