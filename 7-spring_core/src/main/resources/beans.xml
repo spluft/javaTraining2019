@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:util="http://www.springframework.org/schema/util"
+       xsi:schemaLocation="
+        http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans-4.3.xsd
+        http://www.springframework.org/schema/util
+        http://www.springframework.org/schema/util/spring-util-4.3.xsd"> <!-- If I use spring-bean (without version) attribute name not allowed in contructor-arg -->
+
+    <!-- riders -->
+    <bean id="rider1" class="task01.models.Rider">
+        <constructor-arg name="name" value="Dobrinya"/>
+        <constructor-arg name="skill" value="9"/>
+    </bean>
+    <bean id="rider2" class="task01.models.Rider">
+        <constructor-arg name="name" value="Ilya"/>
+        <constructor-arg name="skill" value="8"/>
+    </bean>
+    <bean id="rider3" class="task01.models.Rider">
+        <constructor-arg name="name" value="Aleosha"/>
+        <constructor-arg name="skill" value="2"/>
+    </bean>
+
+    <!-- breeds -->
+    <bean id="breed1" class="task01.models.Breed">
+        <constructor-arg name="name" value="1"/>
+    </bean>
+    <bean id="breed2" class="task01.models.Breed">
+        <constructor-arg name="name" value="2"/>
+    </bean>
+    <bean id="breed3" class="task01.models.Breed">
+        <constructor-arg name="name" value="3"/>
+    </bean>
+
+    <!-- horse -->
+    <bean id="horse1" class="task01.models.Horse">
+        <constructor-arg name="name" value="1"/>
+        <constructor-arg name="breed" ref="breed1"/>
+        <constructor-arg name="speed" value="50"/>
+        <constructor-arg name="rider" ref="rider1"/>
+    </bean>
+    <bean id="horse2" class="task01.models.Horse">
+        <constructor-arg name="name" value="2"/>
+        <constructor-arg name="breed" ref="breed2"/>
+        <constructor-arg name="speed" value="60"/>
+        <constructor-arg name="rider" ref="rider2"/>
+    </bean>
+    <bean id="horse3" class="task01.models.Horse">
+        <constructor-arg name="name" value="3"/>
+        <constructor-arg name="breed" ref="breed3"/>
+        <constructor-arg name="speed" value="70"/>
+        <constructor-arg name="rider" ref="rider3"/>
+    </bean>
+
+    <util:list id="horses" list-class="java.util.ArrayList">
+        <ref bean="horse1"/>
+        <ref bean="horse2"/>
+        <ref bean="horse3"/>
+    </util:list>
+
+    <!-- race -->
+    <bean id="race1" class="task01.models.Race">
+        <property name="distance" value="10"/>
+    </bean>
+
+    <!-- services -->
+    <bean id="horseService" class="task01.services.HorseService">
+        <property name="horses" ref="horses"/>
+    </bean>
+    <bean id="raceService" class="task01.services.RaceService">
+        <constructor-arg name="horseService" ref="horseService"/>
+    </bean>
+    <bean id="emulationService" class="task01.services.EmulationService"/>
+</beans>
