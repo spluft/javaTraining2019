@@ -1,16 +1,16 @@
-package component;
+package task01.component;
 
-import component.dao.FriendshipDao;
-import component.dao.LikeDao;
-import component.dao.PostDao;
-import component.dao.UserDao;
-import entity.Friendship;
-import entity.Like;
-import entity.Post;
-import entity.User;
+import task01.component.dao.FriendshipDao;
+import task01.component.dao.LikeDao;
+import task01.component.dao.PostDao;
+import task01.component.dao.UserDao;
+import task01.entity.Friendship;
+import task01.entity.Like;
+import task01.entity.Post;
+import task01.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import component.utils.DataGenerator;
+import task01.component.utils.DataGenerator;
 
 import java.util.List;
 

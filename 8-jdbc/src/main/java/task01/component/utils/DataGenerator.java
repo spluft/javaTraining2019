@@ -1,16 +1,15 @@
-package component.utils;
+package task01.component.utils;
 
-import entity.Friendship;
-import entity.Like;
-import entity.Post;
-import entity.User;
+import task01.entity.Friendship;
+import task01.entity.Like;
+import task01.entity.Post;
+import task01.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
-import java.time.Month;
 import java.util.List;
 import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;

@@ -1,4 +1,4 @@
-package component.utils;
+package task01.component.utils;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;

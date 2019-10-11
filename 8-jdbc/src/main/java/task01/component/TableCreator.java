@@ -1,4 +1,4 @@
-package component;
+package task01.component;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;

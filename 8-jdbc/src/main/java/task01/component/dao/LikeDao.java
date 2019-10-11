@@ -1,6 +1,6 @@
-package component.dao;
+package task01.component.dao;
 
-import entity.Like;
+import task01.entity.Like;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BatchPreparedStatementSetter;
 import org.springframework.jdbc.core.JdbcTemplate;

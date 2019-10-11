@@ -1,4 +1,4 @@
-package config;
+package task01.config;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -12,7 +12,7 @@ import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import javax.sql.DataSource;
 
 @Configuration
-@ComponentScan("component")
+@ComponentScan("task01/component")
 @PropertySource(value = "classpath:/app.properties")
 public class AppConfig {
 

@@ -1,7 +1,9 @@
-import component.dao.UserDao;
-import config.AppConfig;
-import component.DataFiller;
-import component.TableCreator;
+package task01;
+
+import task01.component.dao.UserDao;
+import task01.config.AppConfig;
+import task01.component.DataFiller;
+import task01.component.TableCreator;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.context.ApplicationContext;
