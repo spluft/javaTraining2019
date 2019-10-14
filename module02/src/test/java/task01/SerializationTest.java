@@ -66,12 +66,11 @@ public class SerializationTest {
     }
 
     private void writePerson(Person person, String fileName) throws IOException {
-        FileOutputStream fos = new FileOutputStream(fileName);
-        ObjectOutputStream oos = new ObjectOutputStream(fos);
-
-        oos.writeObject(person);
-        oos.flush();
-        oos.close();
+        try (FileOutputStream fos = new FileOutputStream(fileName);
+             ObjectOutputStream oos = new ObjectOutputStream(fos)) {
+            oos.writeObject(person);
+            oos.flush();
+        }
     }
 
     private List<Person> getPeople() {
