@@ -20,7 +20,7 @@ public class App {
 
         ActorRef managerActor = system.actorOf(Props.create(ManagerActor.class));
         LocalTime now = LocalTime.now();
-        CompletableFuture<Object> userFuture = ask(managerActor, new OrderMessage(1, 1_000_000), 100000).toCompletableFuture();
+        CompletableFuture<Object> userFuture = ask(managerActor, new OrderMessage(1, 1_000_000), 10000).toCompletableFuture();
         OrderMessage order = (OrderMessage) userFuture.join();
         LocalTime end = LocalTime.now();
         Duration duration = Duration.between(now, end);

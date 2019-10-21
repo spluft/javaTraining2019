@@ -20,8 +20,7 @@ public class PcAssemblyTest {
 
     @Test
     public void factorialFJPTest() throws ExecutionException, InterruptedException {
-        String comp = "Computer(order=4, " +
-                "cpu=ComputerPart(status=true, " +
+        String comp = "cpu=ComputerPart(status=true, " +
                 "type=CPU, name=Intel Core i9), " +
                 "motherboard=ComputerPart(status=true, " +
                 "type=MB, name=ASUS), " +
@@ -34,7 +33,7 @@ public class PcAssemblyTest {
 
         ActorRef managerActor = system.actorOf(Props.create(ManagerActor.class));
         LocalTime now = LocalTime.now();
-        CompletableFuture<Object> userFuture = ask(managerActor, new OrderMessage(1, 1_000_000), 100000).toCompletableFuture();
+        CompletableFuture<Object> userFuture = ask(managerActor, new OrderMessage(1, 1_000_000), 10000).toCompletableFuture();
         OrderMessage order = (OrderMessage) userFuture.join();
         LocalTime end = LocalTime.now();
         Duration duration = Duration.between(now, end);
@@ -42,6 +41,8 @@ public class PcAssemblyTest {
         System.out.println("Order was built: " + order.getId());
         system.terminate();
 
-        Assertions.assertEquals(comp, order.getComputers().get(1).toString());
+        for (Computer pc:order.getComputers()) {
+            Assertions.assertTrue(pc.toString().contains(comp));
+        }
     }
 }

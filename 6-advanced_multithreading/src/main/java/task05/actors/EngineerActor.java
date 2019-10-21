@@ -1,10 +1,8 @@
 package task05.actors;
 
-import akka.actor.AbstractLoggingActor;
+import akka.actor.AbstractActor;
 import akka.actor.ActorRef;
 import akka.actor.Props;
-import akka.dispatch.BoundedMessageQueueSemantics;
-import akka.dispatch.RequiresMessageQueue;
 import akka.event.Logging;
 import akka.event.LoggingAdapter;
 import task05.enums.TypeMessage;
@@ -15,7 +13,7 @@ import java.util.concurrent.CompletableFuture;
 
 import static akka.pattern.PatternsCS.ask;
 
-public class EngineerActor extends AbstractLoggingActor implements RequiresMessageQueue<BoundedMessageQueueSemantics> {
+public class EngineerActor extends AbstractActor {
     private final LoggingAdapter log = Logging.getLogger(getContext().getSystem(), this);
     final ActorRef sellerActor = getContext().actorOf(Props.create(SellerActor.class), "seller-actor");
 

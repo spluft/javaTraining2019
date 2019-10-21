@@ -1,17 +1,15 @@
 package task05.actors;
 
-import akka.actor.AbstractLoggingActor;
+import akka.actor.AbstractActor;
 import akka.actor.ActorRef;
 import akka.actor.Props;
-import akka.dispatch.BoundedMessageQueueSemantics;
-import akka.dispatch.RequiresMessageQueue;
 import akka.event.Logging;
 import akka.event.LoggingAdapter;
 import akka.routing.RoundRobinPool;
 import task05.model.Computer;
 import task05.model.OrderMessage;
 
-public class ManagerActor extends AbstractLoggingActor implements RequiresMessageQueue<BoundedMessageQueueSemantics> {
+public class ManagerActor extends AbstractActor {
     private LoggingAdapter log = Logging.getLogger(this);
     private OrderMessage order;
     private ActorRef customer;

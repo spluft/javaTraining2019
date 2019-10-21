@@ -20,7 +20,7 @@ public class EngineerRouter extends AbstractLoggingActor implements RequiresMess
 
     {
         List<Routee> routees = new ArrayList<>();
-        for (int i = 0; i < 10; i++) {
+        for (int i = 0; i < 100; i++) {
             ActorRef ref = getContext().actorOf(Props.create(EngineerActor.class).withDispatcher("my-dispatcher"));
             getContext().watch(ref);
             routees.add(new ActorRefRoutee(ref));
