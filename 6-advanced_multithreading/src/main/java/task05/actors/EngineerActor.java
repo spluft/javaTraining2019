@@ -6,6 +6,7 @@ import akka.actor.Props;
 import task05.enums.TypeMessage;
 import task05.model.Computer;
 import task05.model.ComputerPart;
+import task05.service.AssemblyService;
 
 import java.util.concurrent.CompletableFuture;
 
@@ -29,10 +30,10 @@ public class EngineerActor extends AbstractLoggingActor {
 
                     CompletableFuture<Computer> pcFuture =
                             CompletableFuture.allOf(mbFuture, cpuFuture, ramFuture, hddFuture).thenApply(v -> {
-                                computer.setMotherboard((ComputerPart) mbFuture.join());
-                                computer.setCpu((ComputerPart) cpuFuture.join());
-                                computer.setRam((ComputerPart) ramFuture.join());
-                                computer.setHdd((ComputerPart) hddFuture.join());
+                                AssemblyService.addMotherboard(computer, (ComputerPart) mbFuture.join());
+                                AssemblyService.addCpu(computer, (ComputerPart) cpuFuture.join());
+                                AssemblyService.addRam(computer, (ComputerPart) ramFuture.join());
+                                AssemblyService.addHdd(computer, (ComputerPart) hddFuture.join());
                                 return computer;
                             });
                     Computer pc = pcFuture.join();
