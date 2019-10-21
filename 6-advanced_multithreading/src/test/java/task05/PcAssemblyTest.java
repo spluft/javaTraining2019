@@ -7,7 +7,10 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import task05.actors.ManagerActor;
 import task05.model.Computer;
+import task05.model.OrderMessage;
 
+import java.time.Duration;
+import java.time.LocalTime;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
 
@@ -17,7 +20,7 @@ public class PcAssemblyTest {
 
     @Test
     public void factorialFJPTest() throws ExecutionException, InterruptedException {
-        String comp = "Computer(order=1, " +
+        String comp = "Computer(order=4, " +
                 "cpu=ComputerPart(status=true, " +
                 "type=CPU, name=Intel Core i9), " +
                 "motherboard=ComputerPart(status=true, " +
@@ -26,11 +29,19 @@ public class PcAssemblyTest {
                 "type=HDD, name=500 Gb HDD), " +
                 "ram=ComputerPart(status=true, " +
                 "type=RAM, name=8 Gb DDR3))";
+
         ActorSystem system = ActorSystem.create("computer-factory");
 
-        ActorRef masterActor = system.actorOf(Props.create(ManagerActor.class));
-        CompletableFuture<Object> userFuture = ask(masterActor, Computer.builder().order(1).build(), 1000).toCompletableFuture();
+        ActorRef managerActor = system.actorOf(Props.create(ManagerActor.class));
+        LocalTime now = LocalTime.now();
+        CompletableFuture<Object> userFuture = ask(managerActor, new OrderMessage(1, 1_000_000), 100000).toCompletableFuture();
+        OrderMessage order = (OrderMessage) userFuture.join();
+        LocalTime end = LocalTime.now();
+        Duration duration = Duration.between(now, end);
+        System.out.println(duration.getSeconds());
+        System.out.println("Order was built: " + order.getId());
+        system.terminate();
 
-        Assertions.assertEquals(comp, userFuture.get().toString());
+        Assertions.assertEquals(comp, order.getComputers().get(1).toString());
     }
 }
