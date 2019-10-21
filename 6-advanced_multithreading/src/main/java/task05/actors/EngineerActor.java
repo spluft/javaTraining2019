@@ -1,10 +1,8 @@
 package task05.actors;
 
-import akka.actor.AbstractActor;
+import akka.actor.AbstractLoggingActor;
 import akka.actor.ActorRef;
 import akka.actor.Props;
-import akka.event.Logging;
-import akka.event.LoggingAdapter;
 import task05.enums.TypeMessage;
 import task05.model.Computer;
 import task05.model.ComputerPart;
@@ -13,8 +11,7 @@ import java.util.concurrent.CompletableFuture;
 
 import static akka.pattern.PatternsCS.ask;
 
-public class EngineerActor extends AbstractActor {
-    private final LoggingAdapter log = Logging.getLogger(getContext().getSystem(), this);
+public class EngineerActor extends AbstractLoggingActor {
     final ActorRef sellerActor = getContext().actorOf(Props.create(SellerActor.class), "seller-actor");
 
     @Override
@@ -40,7 +37,7 @@ public class EngineerActor extends AbstractActor {
                             });
                     Computer pc = pcFuture.join();
                     getSender().tell(pc, this.self());
-                    log.info("Computer was built: {} for {}", computer.toString(), this.sender());
+                    log().info("Computer was built: {} for {}", computer.toString(), this.sender());
                 })
                 .build();
     }

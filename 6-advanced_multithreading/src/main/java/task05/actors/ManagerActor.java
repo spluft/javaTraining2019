@@ -1,16 +1,13 @@
 package task05.actors;
 
-import akka.actor.AbstractActor;
+import akka.actor.AbstractLoggingActor;
 import akka.actor.ActorRef;
 import akka.actor.Props;
-import akka.event.Logging;
-import akka.event.LoggingAdapter;
 import akka.routing.RoundRobinPool;
 import task05.model.Computer;
 import task05.model.OrderMessage;
 
-public class ManagerActor extends AbstractActor {
-    private LoggingAdapter log = Logging.getLogger(this);
+public class ManagerActor extends AbstractLoggingActor {
     private OrderMessage order;
     private ActorRef customer;
 
@@ -21,8 +18,6 @@ public class ManagerActor extends AbstractActor {
                     this.order = order;
                     this.customer = getSender();
 
-                    ActorRef actor = getSelf();
-
                     ActorRef engineerRouter = context().actorOf(new RoundRobinPool(4).props(Props.create(EngineerRouter.class)), "engineerRouter");
                     engineerRouter.tell(order, getSelf());
                 })
@@ -30,7 +25,7 @@ public class ManagerActor extends AbstractActor {
                     this.order.addComputer(computer);
                     if (order.getAmount() == order.getComputers().size()) {
                         this.customer.tell(this.order, this.getSelf());
-                        log.info("Order {} is ready for {}", order.getId(), this.sender());
+                        log().info("Order {} is ready for {}", order.getId(), this.sender());
                     }
                 })
                 .build();

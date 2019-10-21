@@ -1,16 +1,13 @@
 package task05.actors;
 
-import akka.actor.AbstractActor;
+import akka.actor.AbstractLoggingActor;
 import akka.actor.Props;
-import akka.event.Logging;
-import akka.event.LoggingAdapter;
 import task05.enums.TypeMessage;
 import task05.model.ComputerPart;
 
 import static task05.enums.TypeMessage.*;
 
-public class SellerActor extends AbstractActor {
-    private final LoggingAdapter log = Logging.getLogger(getContext().getSystem(), this);
+public class SellerActor extends AbstractLoggingActor {
 
     public static Props props(String groupId) {
         return Props.create(SellerActor.class, groupId);
@@ -46,9 +43,9 @@ public class SellerActor extends AbstractActor {
                             computerPart.setStatus(false);
                     }
                     this.getSender().tell(computerPart, this.self());
-                    log.info("Computer part was sent: {}", computerPart.toString());
+                    log().info("Computer part was sent: {}", computerPart.toString());
                 })
-                .matchAny(message -> log.info(this.self().toString() + " received unknown message"))
+                .matchAny(message -> log().info(this.self().toString() + " received unknown message"))
                 .build();
     }
 }
