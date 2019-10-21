@@ -2,6 +2,8 @@ package task05.actors;
 
 import akka.actor.AbstractLoggingActor;
 import akka.actor.Props;
+import akka.dispatch.BoundedMessageQueueSemantics;
+import akka.dispatch.RequiresMessageQueue;
 import akka.event.Logging;
 import akka.event.LoggingAdapter;
 import task05.enums.TypeMessage;
@@ -9,7 +11,7 @@ import task05.model.ComputerPart;
 
 import static task05.enums.TypeMessage.*;
 
-public class SellerActor extends AbstractLoggingActor {
+public class SellerActor extends AbstractLoggingActor implements RequiresMessageQueue<BoundedMessageQueueSemantics> {
     private final LoggingAdapter log = Logging.getLogger(getContext().getSystem(), this);
 
     public static Props props(String groupId) {
@@ -46,7 +48,7 @@ public class SellerActor extends AbstractLoggingActor {
                             computerPart.setStatus(false);
                     }
                     this.getSender().tell(computerPart, this.self());
-                    log.info("Computer part was sended: {}", computerPart.toString());
+                    log.info("Computer part was sent: {}", computerPart.toString());
                 })
                 .matchAny(message -> log.info(this.self().toString() + " received unknown message"))
                 .build();

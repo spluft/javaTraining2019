@@ -5,7 +5,7 @@ import akka.actor.ActorSystem;
 import akka.actor.Props;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-import task05.actors.MasterActor;
+import task05.actors.ManagerActor;
 import task05.model.Computer;
 
 import java.util.concurrent.CompletableFuture;
@@ -28,7 +28,7 @@ public class PcAssemblyTest {
                 "type=RAM, name=8 Gb DDR3))";
         ActorSystem system = ActorSystem.create("computer-factory");
 
-        ActorRef masterActor = system.actorOf(Props.create(MasterActor.class));
+        ActorRef masterActor = system.actorOf(Props.create(ManagerActor.class));
         CompletableFuture<Object> userFuture = ask(masterActor, Computer.builder().order(1).build(), 1000).toCompletableFuture();
 
         Assertions.assertEquals(comp, userFuture.get().toString());
