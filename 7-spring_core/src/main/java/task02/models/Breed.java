@@ -17,8 +17,6 @@ public class Breed {
 
     @Override
     public String toString() {
-        return "Breed{" +
-                "name='" + name + '\'' +
-                '}';
+        return name;
     }
 }

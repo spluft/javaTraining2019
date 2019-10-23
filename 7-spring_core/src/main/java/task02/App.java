@@ -8,14 +8,16 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 import task02.configs.Config;
 import task02.services.EmulationService;
 
+import java.io.IOException;
+
 public class App {
     private static final Logger logger = LogManager.getLogger(App.class);
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
         start();
     }
 
-    private static void start() {
+    private static void start() throws IOException {
         ApplicationContext context = new AnnotationConfigApplicationContext(Config.class);
 
         EmulationService emulationService = context.getBean(EmulationService.class);

@@ -7,7 +7,6 @@ import task01.models.Horse;
 import task01.models.Race;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
@@ -38,7 +37,7 @@ public class EmulationService {
         race.getHorseList().forEach(horse -> logger.info(horse.toString()));
     }
 
-    private List<Horse> getResult() {
+    private void getResult() {
         distance = race.getHorseList().stream()
                 .collect(Collectors.toMap(Function.identity(), s -> 0d));
 
@@ -54,8 +53,6 @@ public class EmulationService {
 
         System.out.println("Winners:");
         printIntermediateResults();
-
-        return new ArrayList<Horse>();
     }
 
     private double getMaxCoveredDistance() {

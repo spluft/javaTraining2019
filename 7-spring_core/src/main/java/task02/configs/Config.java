@@ -5,6 +5,7 @@ import org.springframework.context.annotation.Configuration;
 import task02.models.Breed;
 import task02.models.Horse;
 import task02.models.Rider;
+import task02.services.BetService;
 import task02.services.EmulationService;
 import task02.services.HorseService;
 import task02.services.RaceService;
@@ -34,6 +35,12 @@ public class Config {
         return raceService;
     }
 
+    @Bean
+    public BetService betService() {
+        BetService betService = new BetService();
+        return betService;
+    }
+
     private List<Horse> getHorses() {
         List<Horse> horses = new ArrayList<>();
         List<Breed> breeds = getBreeds();
@@ -54,9 +61,9 @@ public class Config {
 
     private List<Rider> getRiders() {
         List<Rider> riders = new ArrayList<>();
-        riders.add(new Rider("1",1));
-        riders.add(new Rider("2",2));
-        riders.add(new Rider("3",3));
+        riders.add(new Rider("Dobrinya",1));
+        riders.add(new Rider("Ilya",2));
+        riders.add(new Rider("Aleosha",3));
         return riders;
     }
 }
