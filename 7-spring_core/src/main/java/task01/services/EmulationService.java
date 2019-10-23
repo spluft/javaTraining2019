@@ -21,7 +21,7 @@ public class EmulationService {
     private Race race;
     Map<Horse, Double> distance;
 
-    public List<Horse> start(ApplicationContext context) throws IOException {
+    public void start(ApplicationContext context) throws IOException {
         RaceService raceService = context.getBean("raceService", RaceService.class);
         BetService betService = context.getBean("betService", BetService.class);
 
@@ -30,7 +30,7 @@ public class EmulationService {
         printInformation(race);
         betService.makeBet(race);
 
-        return getResult();
+        getResult();
     }
 
     private void printInformation(Race race) {
@@ -51,6 +51,9 @@ public class EmulationService {
                 e.printStackTrace();
             }
         } while (getMaxCoveredDistance() < 100);
+
+        System.out.println("Winners:");
+        printIntermediateResults();
 
         return new ArrayList<Horse>();
     }
