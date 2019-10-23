@@ -41,7 +41,6 @@ public class BetService {
 
     private static List<Horse> getBetHorses(Race race, Function<Horse, String> mapper) throws IOException {
         List<Horse> horses;
-        Predicate<Horse> chosenByBreedPredicate;
         boolean flag;
         do {
             printOptions(race, mapper);
@@ -66,7 +65,6 @@ public class BetService {
 
     private static List<Horse> getBetHorsesByBreed(Race race, Function<Horse, String> mapper) throws IOException {
         List<Horse> horses;
-        Predicate<Horse> chosenByBreedPredicate;
         boolean flag;
         do {
             printOptions(race, mapper);
