@@ -26,7 +26,7 @@ public class BetService {
 
             switch (reader.readLine()) {
                 case "1":
-                    return getBetHorses(race, horse -> horse.getName());
+                    return getBetHorses(race, Horse::getName);
                 case "2":
                     return getBetHorses(race, horse -> horse.getRider().getName());
                 case "3":
