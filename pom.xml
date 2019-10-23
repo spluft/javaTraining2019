@@ -12,6 +12,7 @@
     <module>module01</module>
     <module>module02</module>
     <module>5-concurency</module>
+    <module>13-testing_with_junit</module>
 </modules>
 
 <properties>
