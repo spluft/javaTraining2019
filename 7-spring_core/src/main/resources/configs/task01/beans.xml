@@ -71,4 +71,5 @@
         <constructor-arg name="horseService" ref="horseService"/>
     </bean>
     <bean id="emulationService" class="task01.services.EmulationService"/>
+    <bean id="betService" class="task01.services.BetService"/>
 </beans>

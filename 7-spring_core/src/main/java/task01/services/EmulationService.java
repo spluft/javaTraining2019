@@ -3,11 +3,14 @@ package task01.services;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.context.ApplicationContext;
-import task01.models.Bet;
 import task01.models.Horse;
 import task01.models.Race;
 
-import java.util.*;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.Map;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.function.Function;
 import java.util.stream.Collectors;
@@ -15,19 +18,17 @@ import java.util.stream.IntStream;
 
 public class EmulationService {
     private static final Logger logger = LogManager.getLogger(EmulationService.class);
-    private List<Horse> horses;
-    private Bet bet;
     private Race race;
     Map<Horse, Double> distance;
 
-    public List<Horse> start(ApplicationContext context) {
-        HorseService horseService = context.getBean("horseService", HorseService.class);
+    public List<Horse> start(ApplicationContext context) throws IOException {
         RaceService raceService = context.getBean("raceService", RaceService.class);
+        BetService betService = context.getBean("betService", BetService.class);
 
         this.race = raceService.getRace();
 
         printInformation(race);
-        this.bet = makeABet(race);
+        betService.makeBet(race);
 
         return getResult();
     }
@@ -35,19 +36,6 @@ public class EmulationService {
     private void printInformation(Race race) {
         logger.info("Information about race: ");
         race.getHorseList().forEach(horse -> logger.info(horse.toString()));
-    }
-
-    private Bet makeABet(Race race) {
-        String scanner;
-        Horse horse;
-        do {
-            logger.info("You bet on a horse:");
-            scanner = new Scanner(System.in).nextLine();
-            horse = race.getHorseByName(scanner);
-        } while (horse == null);
-        logger.info("Your bet is:");
-        Integer amount = new Scanner(System.in).nextInt();
-        return new Bet(amount, horse);
     }
 
     private List<Horse> getResult() {
@@ -68,12 +56,16 @@ public class EmulationService {
     }
 
     private double getMaxCoveredDistance() {
-        return distance.values().stream().mapToDouble(Double::doubleValue).max().getAsDouble();
+        return distance.values().stream()
+                .mapToDouble(Double::doubleValue)
+                .max()
+                .getAsDouble();
     }
 
     private void increaseCoveredDistance() {
-        distance.entrySet().forEach(entry ->
-                entry.setValue(entry.getValue() + ThreadLocalRandom.current().nextDouble(3, 5)));
+        distance.entrySet()
+                .forEach(entry ->
+                        entry.setValue(entry.getValue() + ThreadLocalRandom.current().nextDouble(3, 5)));
     }
 
 

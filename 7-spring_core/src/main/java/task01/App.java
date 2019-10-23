@@ -6,14 +6,16 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import task01.services.EmulationService;
 
+import java.io.IOException;
+
 public class App {
     private static final Logger logger = LogManager.getLogger(App.class);
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
         start();
     }
 
-    private static void start() {
+    private static void start() throws IOException {
         ApplicationContext context = new ClassPathXmlApplicationContext("configs/task01/beans.xml");
 
         EmulationService emulationService = context.getBean("emulationService", EmulationService.class);
