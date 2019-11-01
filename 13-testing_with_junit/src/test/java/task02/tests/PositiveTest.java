@@ -135,7 +135,6 @@ public class PositiveTest {
     @Test(timeout=2000)
     public void fiboCorrect() {
         BigInteger fibo = calculator.fastFibonacciDoubling(22);
-        System.out.println(fibo);
         assertThat(BigInteger.valueOf(17711), equalTo(fibo));
     }
 }
