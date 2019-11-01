@@ -90,6 +90,13 @@ public class Calculator {
      * the other programming language implementations for the recursive version.
      */
     public BigInteger fastFibonacciDoubling(int n) {
+        if (n <= 0) {
+            throw new IllegalArgumentException();
+        }
+        if (n == 1 || n == 2) {
+            return BigInteger.valueOf(1);
+        }
+
         BigInteger a = BigInteger.ZERO;
         BigInteger b = BigInteger.ONE;
         int m = 0;
